@@ -13,14 +13,14 @@ export const mintNFT = async (url, name, description) => {
   if (url.trim() === "" || name.trim() === "" || description.trim() === "") {
     return {
       success: false,
-      status: "모든 텍스트를 작성하셔야 업로드가 가능합니다.",
+      status: "모든 텍스트를 작성해주셔야 합니다.",
     };
   }
 
   //make metadata
   const metadata = new Object();
-  metadata.image = url;
   metadata.name = name;
+  metadata.image = url;
   metadata.description = description;
 
   //make pinata call
@@ -69,7 +69,7 @@ export const connectWallet = async () => {
         method: "eth_requestAccounts",
       });
       const obj = {
-        status: "👆🏽 Write a message in the text-field above.",
+        status: "👆🏽 상단의 모든 필드를 작성해야 NFT발행이 가능합니다..",
         address: addressArray[0],
       };
       return obj;
@@ -88,7 +88,7 @@ export const connectWallet = async () => {
             {" "}
             🦊{" "}
             <a target="_blank" href={`https://metamask.io/download.html`}>
-              브라우저에 메타마스크가 설치되어 있지 않습니다.
+              메타마스크를 먼저 설치해주세요.
             </a>
           </p>
         </span>
@@ -105,12 +105,12 @@ export const getCurrentWalletConnected = async () => {
       if (addressArray.length > 0) {
         return {
           address: addressArray[0],
-          status: "👆🏽 Write a message in the text-field above.",
+          status: "👆🏽 상단의 모든 필드를 작성해야 NFT발행이 가능합니다.",
         };
       } else {
         return {
           address: "",
-          status: "오른쪽 상단 버튼을 이용해 Metamask에 연결해 주세요.",
+          status: "  브라우저와 메타마스크를 먼저 연결해주세요.",
         };
       }
     } catch (err) {
@@ -128,7 +128,7 @@ export const getCurrentWalletConnected = async () => {
             {" "}
             🦊{" "}
             <a target="_blank" href={`https://metamask.io/download.html`}>
-              브라우저에 메타마스크가 설치되어 있지 않습니다.
+              메타마스크를 먼저 설치해주세요.
             </a>
           </p>
         </span>

@@ -4,6 +4,8 @@ import {
   getCurrentWalletConnected,
   mintNFT,
 } from "./utils/interact.js";
+
+import "./css/Minter.css";
 const Minter = (props) => {
   //State variables
   const [walletAddress, setWallet] = useState(""); //유저의 지갑주소를 담는 변수
@@ -18,10 +20,10 @@ const Minter = (props) => {
       window.ethereum.on("accountsChanged", (accounts) => {
         if (accounts.length > 0) {
           setWallet(accounts[0]);
-          setStatus("👆🏽 Write a message in the text-field above.");
+          setStatus("👆🏽 👆🏽 상단의 모든 필드를 채워야 NFT발행이 가능합니다.");
         } else {
           setWallet("");
-          setStatus("🦊 Connect to Metamask using the top right button.");
+          setStatus("🦊  브라우저와 메타마스크를 먼저 연결해주세요.");
         }
       });
     } else {
@@ -64,6 +66,10 @@ const Minter = (props) => {
   //   }
   // };
 
+  const fileUploadPressed = async () => {
+    // let formData = new FormData();
+    // formData.append('files')
+  };
   const connectWalletPressed = async () => {
     const walletResponse = await connectWallet();
     setStatus(walletResponse.status);
@@ -89,32 +95,44 @@ const Minter = (props) => {
       </button>
 
       <br></br>
-      <h1 id="title">🧙‍♂️ Alchemy NFT Minter</h1>
-      <p>
-        Simply add your asset's link, name, and description, then press "Mint."
-      </p>
+      <h1 id="title">🧙‍♂️ NFTMARKET</h1>
+      <p>모든 빈칸을 작성한 후 "NFT발행" 버튼을 클릭하세요</p>
       <form>
         <h2>🖼NFT 저장 위치: </h2>
-        <input
-          type="text"
-          placeholder="e.g. https://gateway.pinata.cloud/ipfs/<hash>"
-          onChange={(event) => setURL(event.target.value)}
-        />
-        <h2>🤔 이름: </h2>
-        <input
-          type="text"
-          placeholder="e.g. My first NFT!"
-          onChange={(event) => setName(event.target.value)}
-        />
-        <h2>✍️ 설명: </h2>
-        <input
-          type="text"
-          placeholder="e.g. Even cooler than cryptokitties ;)"
-          onChange={(event) => setDescription(event.target.value)}
-        />
+        <div id="special">
+          <input
+            type="text"
+            id="uploadText"
+            placeholder="e.g. https://gateway.pinata.cloud/ipfs/<hash>"
+            onChange={(event) => setURL(event.target.value)}
+          />
+          <input
+            type="button"
+            id="uploadButton"
+            onClick={fileUploadPressed}
+            value="파일 선택"
+            variant="Contained"
+          />
+        </div>
+        <div>
+          <h2>🤔 이름: </h2>
+          <input
+            type="text"
+            placeholder="e.g. My first NFT!"
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
+        <div>
+          <h2>✍️ 설명: </h2>
+          <input
+            type="text"
+            placeholder="e.g. Even cooler than cryptokitties ;)"
+            onChange={(event) => setDescription(event.target.value)}
+          />
+        </div>
       </form>
       <button id="mintButton" onClick={onMintPressed}>
-        NFT 발행하기
+        NFT 발행
       </button>
       <p id="status">{status}</p>
     </div>
