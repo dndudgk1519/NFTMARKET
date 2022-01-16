@@ -30,8 +30,7 @@ const Minter = (props) => {
           {" "}
           🦊{" "}
           <a target="_blank" href={`https://metamask.io/download.html`}>
-            You must install Metamask, a virtual Ethereum wallet, in your
-            browser.
+            브라우저와 메타마스크를 먼저 연결해주세요.
           </a>
         </p>
       );
@@ -46,7 +45,7 @@ const Minter = (props) => {
     addWalletListener();
   }, []);
 
-  // dapp 프론트에서 disconnect 구현 시도
+  // dapp 프론트에서 disconnect 구현 시도 (추후 수정 예정)
   // const connectWalletPressed = async () => {
   //   let addressStatus = document.getElementById("walletButton");
 
@@ -80,7 +79,7 @@ const Minter = (props) => {
     <div className="Minter">
       <button id="walletButton" onClick={connectWalletPressed} value="No">
         {walletAddress.length > 0 ? (
-          "Connected: " +
+          "연결된 계정: " +
           String(walletAddress).substring(0, 6) +
           "..." +
           String(walletAddress).substring(38)
@@ -95,19 +94,19 @@ const Minter = (props) => {
         Simply add your asset's link, name, and description, then press "Mint."
       </p>
       <form>
-        <h2>🖼 Link to asset: </h2>
+        <h2>🖼NFT 저장 위치: </h2>
         <input
           type="text"
           placeholder="e.g. https://gateway.pinata.cloud/ipfs/<hash>"
           onChange={(event) => setURL(event.target.value)}
         />
-        <h2>🤔 Name: </h2>
+        <h2>🤔 이름: </h2>
         <input
           type="text"
           placeholder="e.g. My first NFT!"
           onChange={(event) => setName(event.target.value)}
         />
-        <h2>✍️ Description: </h2>
+        <h2>✍️ 설명: </h2>
         <input
           type="text"
           placeholder="e.g. Even cooler than cryptokitties ;)"
@@ -115,7 +114,7 @@ const Minter = (props) => {
         />
       </form>
       <button id="mintButton" onClick={onMintPressed}>
-        Mint NFT
+        NFT 발행하기
       </button>
       <p id="status">{status}</p>
     </div>

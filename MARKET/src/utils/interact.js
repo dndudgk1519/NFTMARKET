@@ -13,14 +13,14 @@ export const mintNFT = async (url, name, description) => {
   if (url.trim() === "" || name.trim() === "" || description.trim() === "") {
     return {
       success: false,
-      status: "❗Please make sure all fields are completed before minting.",
+      status: "모든 텍스트를 작성하셔야 업로드가 가능합니다.",
     };
   }
 
   //make metadata
   const metadata = new Object();
-  metadata.name = name;
   metadata.image = url;
+  metadata.name = name;
   metadata.description = description;
 
   //make pinata call
@@ -28,7 +28,7 @@ export const mintNFT = async (url, name, description) => {
   if (!pinataResponse.success) {
     return {
       success: false,
-      status: "😢 Something went wrong while uploading your tokenURI.",
+      status: "TOKENURI 업로드에 실패했습니다.",
     };
   }
   const tokenURI = pinataResponse.pinataUrl;
@@ -88,8 +88,7 @@ export const connectWallet = async () => {
             {" "}
             🦊{" "}
             <a target="_blank" href={`https://metamask.io/download.html`}>
-              You must install Metamask, a virtual Ethereum wallet, in your
-              browser.
+              브라우저에 메타마스크가 설치되어 있지 않습니다.
             </a>
           </p>
         </span>
@@ -111,7 +110,7 @@ export const getCurrentWalletConnected = async () => {
       } else {
         return {
           address: "",
-          status: "🦊 Connect to Metamask using the top right button.",
+          status: "오른쪽 상단 버튼을 이용해 Metamask에 연결해 주세요.",
         };
       }
     } catch (err) {
@@ -129,8 +128,7 @@ export const getCurrentWalletConnected = async () => {
             {" "}
             🦊{" "}
             <a target="_blank" href={`https://metamask.io/download.html`}>
-              You must install Metamask, a virtual Ethereum wallet, in your
-              browser.
+              브라우저에 메타마스크가 설치되어 있지 않습니다.
             </a>
           </p>
         </span>
