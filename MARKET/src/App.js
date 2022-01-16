@@ -1,5 +1,5 @@
-import './App.css';
-import Minter from './Minter'
+import "./css/App.css";
+import Minter from "./Minter";
 
 function App() {
   return (
