@@ -66,9 +66,16 @@ const Minter = (props) => {
   //   }
   // };
 
-  const fileUploadPressed = async () => {
-    // let formData = new FormData();
-    // formData.append('files')
+  const fileUploadPressed = async (event) => {
+    let fileName = event.target.value;
+
+    const onlyFileName = fileName.substring(
+      fileName.lastIndexOf("\\") + 1,
+      fileName.length
+    );
+    // console.log(fileName);
+    console.log(onlyFileName);
+    setURL(onlyFileName);
   };
   const connectWalletPressed = async () => {
     const walletResponse = await connectWallet();
@@ -99,7 +106,7 @@ const Minter = (props) => {
       <p>모든 빈칸을 작성한 후 "NFT발행" 버튼을 클릭하세요</p>
       <form>
         <h2>🖼NFT 저장 위치: </h2>
-        <div id="special">
+        {/* <div id="special">
           <input
             type="text"
             id="uploadText"
@@ -112,6 +119,14 @@ const Minter = (props) => {
             onClick={fileUploadPressed}
             value="파일 선택"
             variant="Contained"
+          />
+        </div> */}
+        <div>
+          <input
+            type="file"
+            id="uploadfile"
+            placeholder="https://gateway.pinata.cloud/ipfs/hash<>"
+            onChange={fileUploadPressed}
           />
         </div>
         <div>
