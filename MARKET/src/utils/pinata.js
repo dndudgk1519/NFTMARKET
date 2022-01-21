@@ -1,8 +1,11 @@
 require("dotenv").config();
+const axios = require("axios");
+// --------------------------
+const fs = require("fs");
+const FormData = require("form-data");
+// --------------------------
 const key = process.env.REACT_APP_PINATA_KEY;
 const secret = process.env.REACT_APP_PINATA_SECRET;
-
-const axios = require("axios");
 
 export const pinJSONToIPFS = async (JSONBody) => {
   const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
@@ -30,6 +33,64 @@ export const pinJSONToIPFS = async (JSONBody) => {
     });
 };
 
+export const pinFileToIPFS = (key, secret) => {
+  const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+  let filename;
+  let data = new FormData();
+  console.log(fs);
+
+  data.append("file", fs.createReadStream("./127.0.0.1_5500_Home.html.png"));
+  const metadata = JSON.stringify({
+    name: "testname",
+    keyvalues: {
+      exampleKey: "exampleValue",
+    },
+  });
+  data.append("pinataMetadata", metadata);
+
+  // const pinataOptions = JSON.stringify({
+  //   cidVersion: 0,
+  //   customPinPolicy: {
+  //     regions: [
+  //       {
+  //         id: "FRA1",
+  //         desireReplicationCount: 1,
+  //       },
+
+  //       {
+  //         id: `NYC1`,
+  //         desireReplicationCount: 2,
+  //       },
+  //     ],
+  //   },
+  // });
+  // data.append("pinataOptions", pinataOptions);
+
+  return axios
+    .post(url, data, {
+      maxBodyLength: "Infinity",
+      headers: {
+        "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+        pinata_api_key: key,
+        pinata_secret_api_key: secret,
+      },
+    })
+    .then(function (response) {
+      const hash = response.data.IpfsHash;
+      return {
+        hash,
+        ipfsLink: `ipfs//${hash}`,
+        pinataUrl: `https://ipfs.io/ipfs/${hash}`,
+      };
+    })
+    .catch(function (error) {
+      // console.log(error);
+      return {
+        success: false,
+        message: error.message,
+      };
+    });
+};
 //
 // API Key: 2e383ddc7e56be9e0b00
 // API Secret: f0a8d5233a2ab5926ec0d2a6a9c9c59bae5f7cd4828b786355d4cef692b60240

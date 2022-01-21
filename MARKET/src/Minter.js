@@ -77,6 +77,7 @@ const Minter = (props) => {
     console.log(onlyFileName);
     setURL(onlyFileName);
   };
+
   const connectWalletPressed = async () => {
     const walletResponse = await connectWallet();
     setStatus(walletResponse.status);
