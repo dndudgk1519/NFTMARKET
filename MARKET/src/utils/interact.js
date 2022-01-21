@@ -1,5 +1,5 @@
 import { pinJSONToIPFS } from "./pinata.js";
-
+import { pinFileToIPFS } from "./pinata.js";
 require("dotenv").config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
@@ -24,6 +24,13 @@ export const mintNFT = async (url, name, description) => {
   metadata.description = description;
 
   //make pinata call
+  const pinataFileResponse = await pinFileToIPFS(metadata);
+  if (!pinataFileResponse.success) {
+    return {
+      success: false,
+      status: "file 전송 에러",
+    };
+  }
   const pinataResponse = await pinJSONToIPFS(metadata);
   if (!pinataResponse.success) {
     return {
@@ -31,6 +38,8 @@ export const mintNFT = async (url, name, description) => {
       status: "TOKENURI 업로드에 실패했습니다.",
     };
   }
+  const fileHash = pinataResponse;
+  console.log(fileHash);
   const tokenURI = pinataResponse.pinataUrl;
 
   window.contract = await new web3.eth.Contract(contractABI, contractAddress);
