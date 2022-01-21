@@ -66,22 +66,9 @@ const Minter = (props) => {
   //   }
   // };
 
-<<<<<<< Updated upstream
   const fileUploadPressed = async () => {
     // let formData = new FormData();
     // formData.append('files')
-=======
-  const fileUploadPressed = async (event) => {
-    let fileName = event.target.value;
-    console.log("fileName = " + fileName);
-    const onlyFileName = fileName.substring(
-      fileName.lastIndexOf("\\") + 1,
-      fileName.length
-    );
-    console.log(onlyFileName);
-    // console.log(fileName);
-    setURL(onlyFileName);
->>>>>>> Stashed changes
   };
 
   const connectWalletPressed = async () => {
